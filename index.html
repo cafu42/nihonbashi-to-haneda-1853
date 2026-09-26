@@ -10,7 +10,7 @@
 <style>
 :root{
   --paper:#EDEFE8; --sheet:#F7F8F4; --ink:#22304A; --muted:#6B7486; --line:#C9CDC2;
-  --land:#ECE7D6; --high:#DDD6BE; --new-land:#EED9A0; --water:#8FC4DE; --water-ink:#3F7FA3;
+  --land:#D9CB8F; --high:#CBBC80; --new-land:#EED9A0; --water:#C6DFEE; --water-ink:#6FA6C8; --l-med:#D9CB8F; --l-edo1:#B4B2D8; --l-edo2:#72B2DE; --l-1909:#E8E170; --l-1951:#B9D477; --l-1971:#EFC389; --l-1989:#EBBBD0; --l-2005:#DC8E79;
   --accent:#C0392B; --subway:#2E7D6B; --hsr:#2B5DA8; --burn:#5A3A2E; --town:#8C93A3; --air:#DCDCD6; --b-top:#F4F2EA; --b-u:#B9B6A9; --b-v:#D3D0C4; --b-edge:#9E9B8E; --t-top:#5B6A87; --t-u:#22304A; --t-v:#34425F;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
@@ -19,13 +19,13 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --paper:#151B28; --sheet:#1C2334; --ink:#E6E8EE; --muted:#9AA3B5; --line:#343D52;
-    --land:#3E3F37; --high:#4A4B41; --new-land:#6A5C35; --water:#2F7196; --water-ink:#9BD1EA;
+    --land:#5A5439; --high:#4F4A32; --new-land:#6A5C35; --water:#1E3A4F; --water-ink:#6FA3C2; --l-med:#5A5439; --l-edo1:#4A4A6C; --l-edo2:#2E5E7E; --l-1909:#6A672E; --l-1951:#4F613B; --l-1971:#6F5638; --l-1989:#6A4858; --l-2005:#6F4035;
     --accent:#FF6F5B; --subway:#4FB39B; --hsr:#6E9BE8; --burn:#C9876F; --town:#6F788C; --air:#39404F; --b-top:#6A7288; --b-u:#343B4D; --b-v:#474F63; --b-edge:#2A3040; --t-top:#C9CFDD; --t-u:#8E97AB; --t-v:#AAB2C4;
   }
 }
 :root[data-theme="dark"]{
   --paper:#151B28; --sheet:#1C2334; --ink:#E6E8EE; --muted:#9AA3B5; --line:#343D52;
-  --land:#3E3F37; --high:#4A4B41; --new-land:#6A5C35; --water:#2F7196; --water-ink:#9BD1EA;
+  --land:#5A5439; --high:#4F4A32; --new-land:#6A5C35; --water:#1E3A4F; --water-ink:#6FA3C2; --l-med:#5A5439; --l-edo1:#4A4A6C; --l-edo2:#2E5E7E; --l-1909:#6A672E; --l-1951:#4F613B; --l-1971:#6F5638; --l-1989:#6A4858; --l-2005:#6F4035;
   --accent:#FF6F5B; --subway:#4FB39B; --hsr:#6E9BE8; --burn:#C9876F; --town:#6F788C; --air:#39404F; --b-top:#6A7288; --b-u:#343B4D; --b-v:#474F63; --b-edge:#2A3040; --t-top:#C9CFDD; --t-u:#8E97AB; --t-v:#AAB2C4;
 }
 *,*::before,*::after{box-sizing:inherit}
@@ -65,6 +65,7 @@ body{margin:0;background:var(--paper);color:var(--ink);
 .legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11.5px;color:var(--muted);margin-top:6px}
 .legend i{display:inline-block;width:18px;height:0;vertical-align:middle;margin-right:5px;border-top:2px solid var(--ink)}
 .legend i.plan{border-top:2px dashed var(--accent)}.legend i.sub{border-top-color:var(--subway)}.legend i.hsr{border-top-color:var(--hsr)}
+.legend i.sw{width:12px;height:10px;border:none;border-radius:2px;margin-right:4px}.legend .lt{font-weight:700}
 .legend i.nl{height:9px;border:none;background:var(--new-land);border-radius:2px}
 .grid{display:grid;grid-template-columns:1fr;gap:6px 28px;margin-top:18px}
 @media (min-width:860px){.grid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
@@ -101,7 +102,9 @@ body{margin:0;background:var(--paper);color:var(--ink);
     </div>
   </div>
   <p class="hint2">再生中に地図を押している間は止まります。バーや年号をタップすると、その時点でじっくり見られます。</p>
-  <div class="legend"><span><i></i>鉄道・道路</span><span><i class="sub"></i>地下鉄</span><span><i class="hsr"></i>新幹線・モノレール</span><span><i class="plan"></i>計画</span><span><i class="nl"></i>その時代の埋立地</span></div>
+  <div class="legend"><span><i></i>鉄道・道路</span><span><i class="sub"></i>地下鉄</span><span><i class="hsr"></i>新幹線・モノレール</span><span><i class="plan"></i>計画</span></div>
+  <div class="legend layers"><span class="lt">土地ができた年代</span><span><i class="sw" style="background:var(--l-med)"></i>もとの陸地</span><span><i class="sw" style="background:var(--l-edo1)"></i>江戸初期</span><span><i class="sw" style="background:var(--l-edo2)"></i>江戸末期</span><span><i class="sw" style="background:var(--l-1909)"></i>〜1909</span><span><i class="sw" style="background:var(--l-1951)"></i>〜1951</span><span><i class="sw" style="background:var(--l-1971)"></i>〜1971</span><span><i class="sw" style="background:var(--l-1989)"></i>〜1989</span><span><i class="sw" style="background:var(--l-2005)"></i>〜2005</span></div>
+  <p class="hint2">埋立地の色分けは、国土交通省 関東地方整備局 東京港湾事務所「埋立の変遷」の年代区分をもとに模式化しています。</p>
   <div class="grid">
     <div><div class="block"><p class="story" id="story"></p></div>
       <div class="block"><h2>この時代に現れたもの</h2><ul class="lm" id="lm"></ul></div>
@@ -121,7 +124,7 @@ const STEPS=[
  {y:"1923",t:"震災、埋立、そして飛行場",k:"1923〜1944　震災復興から戦時へ",
   s:"品川沖では1925〜32年に大規模な埋立が進み、海岸線が大きく沖へ動きます。1931年、羽田の干潟の先に東京飛行場が開港しました。1932年に品川区・大森区が誕生し、東京市の一部になります。"},
  {y:"1945",t:"接収された空港",k:"1945〜1956　戦後",
-  s:"敗戦後、羽田は連合国軍に接収され「ハネダ・エアベース」に。周辺の住民には48時間以内の立ち退きが命じられました。1952年に大部分が返還されて「東京国際空港」と改称。大井には競馬場ができます。"},
+  s:"敗戦後、羽田は連合国軍に接収され「ハネダ・エアベース」に。周辺の住民には48時間以内の立ち退きが命じられました。1952年に大部分が返還されて「東京国際空港」と改称。大井には競馬場ができます。港の埠頭も接収され、沖の埋立はしばらく止まりました。"},
  {y:"1958",t:"五輪インフラが湾岸に集まる",k:"1957〜1970　高度成長期",
   s:"1958年に東京タワーが完成。1964年には東京モノレール、首都高羽田線、東海道新幹線がそろって開業し、海沿いの細い帯に高速の交通が重なります。1968年には浅草線が京急と直通し、1970年には浜松町に高さ152mの世界貿易センタービル。都電は姿を消し始めます。"},
  {y:"1971",t:"コンテナ埠頭と沖へ出る空港",k:"1971〜1992　海がさらに遠くなる",
@@ -217,8 +220,10 @@ const AIRR=[null,null,null,[905,386,50,16],[890,380,90,45],[885,378,108,62],[880
 const ZONES=[[0,160],[160,285],[285,425],[425,525],[525,700],[700,870],[870,1000]];
 const TOWN=[[8,7,6,7,4,5,3],[12,8,6,7,4,5,3],[20,12,8,9,5,6,4],[31,24,12,10,8,8,5],[24,14,10,8,6,6,5],[31,31,24,20,15,12,8],[45,40,31,30,24,20,10],[60,60,48,45,32,28,12],[70,70,60,52,38,32,14]];
 const IND=[0,0,4,6,6,12,15,20,24];
-const ISL=[{s:6,poly:[[320,532],[480,526],[492,600],[312,600]],base:[0,0,0,0,0,0,0,22,30]},
-           {s:6,poly:[[662,550],[776,542],[782,592],[666,598]],base:[0,0,0,0,0,0,8,12,14]}];
+const LAYER_COL={med:"l-med",edo1:"l-edo1",edo2:"l-edo2",y1909:"l-1909",y1951:"l-1951",y1971:"l-1971",y1989:"l-1989",y2005:"l-2005"};
+const LAYER_OF=[null,"l-edo2","l-1909","l-1951","l-1951","l-1971","l-1989","l-2005","l-2005"];
+const ISL=[{s:5,col:"l-1971",poly:[[320,532],[480,526],[492,600],[312,600]],base:[0,0,0,0,0,0,0,22,30]},
+           {s:6,col:"l-1989",poly:[[662,550],[776,542],[782,592],[666,598]],base:[0,0,0,0,0,0,8,12,14]}];
 function inPoly(x,y,pl){let c=false;for(let a=0,b=pl.length-1;a<pl.length;b=a++){const [xi,yi]=pl[a],[xj,yj]=pl[b];if(((yi>y)!==(yj>y))&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)c=!c}return c}
 const LINES=[
  {s:0,k:"road",p:[[0,ROAD],[1000,314]]},
@@ -249,7 +254,7 @@ const TOUR=[
  {r:[[40,320],[190,320],[340,322],[495,320]],st:[0,2,3],c:["日本橋 — 五街道の起点","高輪大木戸 — 江戸の出入口。沖には品川台場","品川宿 — 東海道の最初の宿場"]},
  {r:[[180,336],[250,346],[330,346],[462,346],[462,338],[650,322]],st:[0,2,4,5],c:["1872 新橋停車場 — 日本初の鉄道の起点","高輪築堤 — 海の上に築いた堤を汽車が走った","品川停車場。宿場の問屋場は1872年の伝馬制度廃止で役目を終える","1871 鈴ヶ森刑場が廃止される"]},
  {r:[[52,338],[180,336],[330,320],[480,307],[900,340]],st:[0,1,3,4],c:["1914 東京駅が開業","旅客の玄関は東京駅へ。新橋停車場は汐留の貨物駅に","1904 京浜電気鉄道が品川（八ツ山）へ","1902 穴守稲荷の参拝客を運ぶ穴守線"]},
- {r:[[330,346],[440,318],[480,307],[670,412],[930,394]],st:[0,1,3,4],c:["高輪築堤は埋立で地中へ（2019年に出土することになる）","1925〜33 京浜の高輪駅 — 第一京浜の路上を電車が走ったターミナル。八ツ山駅も1924年に移転","1939 海軍が勝島の埋立を始める","1931 羽田に東京飛行場。穴守稲荷の門前は行楽地としてにぎわう"]},
+ {r:[[330,346],[440,318],[480,307],[670,412],[930,394]],st:[0,1,3,4],c:["高輪築堤は埋立で地中へ（2019年に出土することになる）","1925〜33 京浜の高輪駅 — 第一京浜の路上を電車が走ったターミナル。八ツ山駅も1924年に移転","1939 京浜運河の開削とともに沖の埋立が始まり、勝島が生まれる（戦争で中断）","1931 羽田に東京飛行場。穴守稲荷の門前は行楽地としてにぎわう"]},
  {r:[[955,418],[930,414],[800,405],[665,412]],st:[0,1,3],c:["1945 GHQの命令で羽田の3町・約1200世帯が48時間以内に退去。穴守線の終点も失われ、大鳥居だけが残された","接収された飛行場 → 1952 東京国際空港に","1950 勝島の埋立地に大井競馬場"]},
  {r:[[250,300],[238,352],[460,382],[580,440],[680,466],[735,390],[890,418],[925,440]],st:[0,2,4,5,7],c:["1958 東京タワー／1970 世界貿易センタービル","1964 新幹線・首都高・モノレールが湾岸に並ぶ","1965 大井競馬場前駅 — まだ海だった場所に建てた仮設駅（開催日のみ営業）","1962 大森の海苔養殖が終わる — 江戸から続いた海苔の海は埋立地に","モノレールで羽田へ"]},
  {r:[[185,350],[600,500],[945,500]],st:[0,1,2],c:["1986 汐留貨物駅が廃止 — 日本初の鉄道の起点が役目を終える。都電もこの時代に姿を消した","1970年代 大井コンテナふ頭","1988 羽田が沖合へ拡張"]},
@@ -312,7 +317,7 @@ buildTimeline();
 /* ================= canvas ================= */
 const cv=$("cv"),ctx=cv.getContext("2d");
 let W=0,Hh=0,DPR=1,C={};
-const VARS=["paper","sheet","ink","muted","line","land","high","new-land","water","water-ink","accent","subway","hsr","burn","air","b-top","b-u","b-v","b-edge","t-top","t-u","t-v"];
+const VARS=["paper","sheet","ink","muted","line","land","high","new-land","water","water-ink","accent","subway","hsr","burn","air","b-top","b-u","b-v","b-edge","t-top","t-u","t-v","l-med","l-edo1","l-edo2","l-1909","l-1951","l-1971","l-1989","l-2005"];
 function readColors(){const cs=getComputedStyle(document.documentElement);VARS.forEach(v=>C[v]=cs.getPropertyValue("--"+v).trim());
   const pc=document.createElement("canvas");pc.width=pc.height=8;const x=pc.getContext("2d");x.strokeStyle=C.burn;x.lineWidth=2.2;
   x.beginPath();x.moveTo(0,8);x.lineTo(8,0);x.moveTo(-2,2);x.lineTo(2,-2);x.moveTo(6,10);x.lineTo(10,6);x.stroke();C.hatch=ctx.createPattern(pc,"repeat")}
@@ -374,28 +379,33 @@ function draw(st){
   ctx.setTransform(DPR,0,0,DPR,0,0);ctx.clearRect(0,0,W,Hh);
   ctx.fillStyle=C.sheet;ctx.fillRect(0,0,W,Hh);
   const lwK=clamp(SC*1.1,.6,2.4);
-  // ground
-  poly(plan([[0,P0],[1000,P0],[1000,600],[0,600]]),C.land);
+  // ground — coloured by the era the land was made (after MLIT "埋立の変遷")
+  const LC=LAYER_COL;
+  poly(plan([[0,P0],[1000,P0],[1000,600],[0,600]]),C[LC.med]);
   poly(plan([[0,P0],[1000,P0],[1000,294],[0,294]]),C.high);
-  const c=coastLerp(i,cp),pv=COAST[Math.max(0,i-1)];
-  if(i>0&&COAST[i].some((v,k)=>v>pv[k]))poly(plan([...CX.map((x,k)=>[x,pv[k]]),...CX.map((x,k)=>[x,c[k]]).reverse()]),C["new-land"]);
+  poly(plan([[0,322],[220,321],[220,coastAtArr(COAST[0],220)],[200,COAST[0][2]],[120,COAST[0][1]],[0,COAST[0][0]]]),C[LC.edo1]);
+  poly(plan([[800,348],[880,360],[1000,380],[1000,COAST[0][10]],[880,COAST[0][9]]]),C[LC.edo2]);
+  const c=coastLerp(i,cp);
+  for(let k=1;k<=i;k++){const pa=COAST[k-1],pb=k===i?c:COAST[k];if(!COAST[k].some((v,j)=>v>pa[j]))continue;
+    poly(plan([...CX.map((x,j)=>[x,pa[j]]),...CX.map((x,j)=>[x,Math.max(pa[j],pb[j])]).reverse()]),C[LAYER_OF[k]])}
   if(i===4){ctx.globalAlpha=.5*cp;poly(plan([[0,P0],[560,P0],[560,400],[0,400]]),C.hatch);ctx.globalAlpha=1}
   const coastPts=CX.map((x,k)=>[x,c[k]]);
   poly(plan([...coastPts,[1000,600],[0,600]]),C.water);
   ctx.beginPath();plan(coastPts).forEach((q,j)=>{const [x,y]=S(q);j?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.strokeStyle=C["water-ink"];ctx.lineWidth=1.3*lwK;ctx.stroke();
-  ISL.forEach(q=>{if(i<q.s)return;ctx.globalAlpha=i===q.s?cp:1;poly(plan(q.poly),i===q.s?C["new-land"]:C.land,C["water-ink"],1.1*lwK);ctx.globalAlpha=1});
+  ISL.forEach(q=>{if(i<q.s)return;ctx.globalAlpha=i===q.s?cp:1;poly(plan(q.poly),C[q.col],C["water-ink"],1.1*lwK);ctx.globalAlpha=1});
   // Katsushima island (reclaimed from 1939) until the coast swallows it
   if(i===3||i===4){const isl=plan([[610,394],[718,388],[724,434],[616,440]]);
-    ctx.globalAlpha=i===3?cp:1;poly(isl,i===3?C["new-land"]:C.land,C["water-ink"],1.1*lwK);
+    ctx.globalAlpha=i===3?cp:1;poly(isl,C[LC.y1951],C["water-ink"],1.1*lwK);
     ctx.globalAlpha=1}
-  if(i>=4){ctx.globalAlpha=i===4?cp:1;const oval=[];for(let a=0;a<6.3;a+=.3)oval.push([667+34*Math.cos(a),414+12*Math.sin(a)]);poly(plan(oval),C.land,C.muted,1.6*lwK);ctx.globalAlpha=1}
-  // airport
-  const a1=AIRR[i],a0=AIRR[Math.max(0,i-1)];
-  if(a1){const a=a0&&i>0?a1.map((v,k)=>lerp(a0[k],v,cp)):[a1[0]+a1[2]/2*(1-cp),a1[1]+a1[3]/2*(1-cp),a1[2]*cp,a1[3]*cp];
-    poly(plan([[a[0],a[1]],[a[0]+a[2],a[1]],[a[0]+a[2],a[1]+a[3]],[a[0],a[1]+a[3]]]),C.air,C.muted,.8);
+  if(i>=4){ctx.globalAlpha=i===4?cp:1;const oval=[];for(let a=0;a<6.3;a+=.3)oval.push([667+34*Math.cos(a),414+12*Math.sin(a)]);poly(plan(oval),null,C.muted,1.6*lwK);ctx.globalAlpha=1}
+  // airport: stacked by the era of each expansion
+  if(AIRR[i]){for(let k=i;k>=3;k--){const r=AIRR[k];if(!r)continue;const pr=AIRR[k-1];
+      const a=(k===i)?(pr?r.map((v,j)=>lerp(pr[j],v,cp)):[r[0]+r[2]/2*(1-cp),r[1]+r[3]/2*(1-cp),r[2]*cp,r[3]*cp]):r;
+      poly(plan([[a[0],a[1]],[a[0]+a[2],a[1]],[a[0]+a[2],a[1]+a[3]],[a[0],a[1]+a[3]]]),C[LAYER_OF[k]],k===i?C["water-ink"]:null,.9*lwK)}
     const rw=[[[912,398],[950,390]]];if(i>=6)rw.push([[900,510],[990,400]],[[920,515],[990,470]]);
-    ctx.globalAlpha=i>=6&&i===6?cp:1;rw.forEach((r,j)=>{if(j&&i===6)ctx.globalAlpha=cp;else ctx.globalAlpha=1;strokePts(plan(r),C.muted,3*lwK)});ctx.globalAlpha=1;
-    if(i>=8){ctx.globalAlpha=i===8?cp:1;poly(plan([[900,560],[995,548],[995,562],[900,574]]),C.air,C.muted,.8);ctx.globalAlpha=1}}
+    rw.forEach((r,j)=>{ctx.globalAlpha=(j&&i===6)?cp:1;strokePts(plan(r),C.muted,3*lwK)});ctx.globalAlpha=1;
+    if(i>=8){ctx.globalAlpha=i===8?cp:1;poly(plan([[900,560],[995,548],[995,562],[900,574]]),C[LC.y2005],C["water-ink"],.8);ctx.globalAlpha=1}}
+
   // ground lines
   LINES.forEach((L,j)=>{if(!L.el)drawLine(L,i,cp,lwK,st.fL.has(j)?st.amp:0)});
   // buildings
