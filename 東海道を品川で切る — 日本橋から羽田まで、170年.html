@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>東海道を品川で切る — 日本橋から羽田まで、170年</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Shippori+Mincho+B1:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EDEFE8; --sheet:#F7F8F4; --ink:#22304A; --muted:#6B7486; --line:#C9CDC2;
+  --land:#ECE7D6; --high:#DDD6BE; --new-land:#EED9A0; --water:#8FC4DE; --water-ink:#3F7FA3;
+  --accent:#C0392B; --subway:#2E7D6B; --hsr:#2B5DA8; --burn:#5A3A2E; --town:#8C93A3; --air:#DCDCD6; --b-top:#F4F2EA; --b-u:#B9B6A9; --b-v:#D3D0C4; --b-edge:#9E9B8E; --t-top:#5B6A87; --t-u:#22304A; --t-v:#34425F;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#151B28; --sheet:#1C2334; --ink:#E6E8EE; --muted:#9AA3B5; --line:#343D52;
+    --land:#3E3F37; --high:#4A4B41; --new-land:#6A5C35; --water:#2F7196; --water-ink:#9BD1EA;
+    --accent:#FF6F5B; --subway:#4FB39B; --hsr:#6E9BE8; --burn:#C9876F; --town:#6F788C; --air:#39404F; --b-top:#6A7288; --b-u:#343B4D; --b-v:#474F63; --b-edge:#2A3040; --t-top:#C9CFDD; --t-u:#8E97AB; --t-v:#AAB2C4;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#151B28; --sheet:#1C2334; --ink:#E6E8EE; --muted:#9AA3B5; --line:#343D52;
+  --land:#3E3F37; --high:#4A4B41; --new-land:#6A5C35; --water:#2F7196; --water-ink:#9BD1EA;
+  --accent:#FF6F5B; --subway:#4FB39B; --hsr:#6E9BE8; --burn:#C9876F; --town:#6F788C; --air:#39404F; --b-top:#6A7288; --b-u:#343B4D; --b-v:#474F63; --b-edge:#2A3040; --t-top:#C9CFDD; --t-u:#8E97AB; --t-v:#AAB2C4;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"BIZ UDPGothic","Hiragino Sans","Yu Gothic",system-ui,sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:18px 16px 110px}
+.masthead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.masthead h1{font-family:"Shippori Mincho B1","Hiragino Mincho ProN",serif;font-weight:800;font-size:17px;margin:0;letter-spacing:.04em}
+.masthead span{font-size:12px;color:var(--muted)}
+.era{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:end;margin-bottom:12px}
+.years{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:clamp(34px,9vw,60px);line-height:1;font-feature-settings:"palt"}
+.title{font-family:"Shippori Mincho B1",serif;font-weight:600;font-size:clamp(17px,4.4vw,24px);line-height:1.35;padding-bottom:4px}
+.kicker{grid-column:1/-1;font-size:13px;color:var(--muted)}
+.stage{position:relative;aspect-ratio:1130/610;background:var(--sheet);border:1px solid var(--line);border-radius:6px;overflow:hidden;touch-action:none}
+@media (max-width:640px){.cap{font-size:12.5px;padding:6px 10px;left:8px;right:8px;bottom:8px}.stage{aspect-ratio:4/3;margin:0 -16px;border-radius:0;border-left:0;border-right:0}}
+#cv{display:block;width:100%;height:100%;cursor:pointer}
+.cap{position:absolute;right:12px;bottom:12px;max-width:34em;background:color-mix(in srgb,var(--paper) 90%,transparent);
+  border-left:3px solid var(--accent);padding:8px 12px;font-size:14px;font-weight:700;line-height:1.5;border-radius:4px;
+  opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s;pointer-events:none}
+.cap.show{opacity:1;transform:none}
+.badge{position:absolute;top:10px;right:10px;font-size:12px;background:var(--ink);color:var(--paper);padding:3px 9px;border-radius:999px}
+.controls{display:flex;align-items:center;gap:12px;margin:12px 0 4px}
+.play{font:inherit;font-size:14px;font-weight:700;background:var(--ink);color:var(--paper);border:none;border-radius:8px;padding:10px 14px;cursor:pointer;white-space:nowrap;min-width:108px}
+.play:focus-visible,.seg:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.scrub{flex:1;min-width:0}
+.track{position:relative;height:28px;cursor:pointer;touch-action:none}
+.track .rail{position:absolute;left:0;right:0;top:12px;height:4px;border-radius:2px;background:var(--line)}
+.track .fill{position:absolute;left:0;top:12px;height:4px;border-radius:2px;background:var(--accent);width:0}
+.track .knob{position:absolute;top:6px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--sheet);border:3px solid var(--accent)}
+.segs{display:flex;gap:2px}
+.seg{flex:1;min-width:0;border:none;background:none;padding:2px 0 0;font:inherit;font-size:10.5px;color:var(--muted);cursor:pointer;border-top:2px solid var(--line);text-align:left;overflow:hidden;white-space:nowrap}
+.seg span{padding-left:2px}.seg .ys{display:none}@media (max-width:640px){.seg .yl{display:none}.seg .ys{display:inline}}
+.seg.done{border-top-color:var(--muted)}
+.seg.on{border-top-color:var(--accent);color:var(--ink);font-weight:700}
+.hint2{font-size:12px;color:var(--muted);margin:2px 0 0}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11.5px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:18px;height:0;vertical-align:middle;margin-right:5px;border-top:2px solid var(--ink)}
+.legend i.plan{border-top:2px dashed var(--accent)}.legend i.sub{border-top-color:var(--subway)}.legend i.hsr{border-top-color:var(--hsr)}
+.legend i.nl{height:9px;border:none;background:var(--new-land);border-radius:2px}
+.grid{display:grid;grid-template-columns:1fr;gap:6px 28px;margin-top:18px}
+@media (min-width:860px){.grid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
+.block{margin-bottom:18px}.block h2{font-size:13px;font-weight:700;margin:0 0 8px;color:var(--muted)}
+.story{font-size:15.5px;line-height:1.85;margin:0;max-width:36em}
+.lm{list-style:none;margin:0;padding:0}
+.lm li{display:grid;grid-template-columns:3.4em 1fr auto;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+.lm li b{font-family:"Shippori Mincho B1",serif;font-weight:800;color:var(--accent)}
+.lm.gone li b{color:var(--muted)}.lm.gone li span{color:var(--muted)}
+.lm li em{font-style:normal;color:var(--muted);font-size:12.5px;white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:13px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--sheet)}
+.chip.new{border-color:var(--accent);color:var(--accent);font-weight:700}.chip.gone{opacity:.45;text-decoration:line-through}
+.stat{font-size:13px;color:var(--muted);margin:0}.stat strong{color:var(--ink)}
+.fade{animation:fade .45s ease}@keyframes fade{from{opacity:.25}to{opacity:1}}
+@media (prefers-reduced-motion: reduce){.fade,.cap{animation:none;transition:none}}
+.wrap{padding-bottom:40px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead"><h1>東海道を品川で切る</h1><span>日本橋から羽田まで、170年</span></header>
+  <section class="era" id="era" aria-live="polite"><div class="years" id="years"></div><div class="title" id="title"></div><div class="kicker" id="kicker"></div></section>
+  <div class="stage">
+    <canvas id="cv" role="img" aria-label="東海道沿いを海側の斜め上から見た立体地図。時代ごとに主要な拠点へカメラが寄って変化を見せる。"></canvas>
+    <div class="cap" id="cap"></div>
+    <div class="badge" id="badge" hidden>一時停止中</div>
+  </div>
+  <div class="controls">
+    <button class="play" id="play">▶ 再生</button>
+    <div class="scrub" id="scrub">
+      <div class="track" id="track"><div class="rail"></div><div class="fill" id="fill"></div><div class="knob" id="knob"></div></div>
+      <div class="segs" id="segs"></div>
+    </div>
+  </div>
+  <p class="hint2">再生中に地図を押している間は止まります。バーや年号をタップすると、その時点でじっくり見られます。</p>
+  <div class="legend"><span><i></i>鉄道・道路</span><span><i class="sub"></i>地下鉄</span><span><i class="hsr"></i>新幹線・モノレール</span><span><i class="plan"></i>計画</span><span><i class="nl"></i>その時代の埋立地</span></div>
+  <div class="grid">
+    <div><div class="block"><p class="story" id="story"></p></div>
+      <div class="block"><h2>この時代に現れたもの</h2><ul class="lm" id="lm"></ul></div>
+      <div class="block" id="gonebox"><h2>この時代に姿を消したもの</h2><ul class="lm gone" id="gone"></ul></div></div>
+    <div><div class="block"><h2>移動手段</h2><div class="chips" id="chips"></div></div>
+      <div class="block"><h2>沿道の高さ</h2><p class="stat" id="stat"></p></div></div>
+  </div>
+</div>
+<script>
+const STEPS=[
+ {y:"1853",t:"江戸の出口、品川宿",k:"1853〜1867　幕末・開国",
+  s:"東海道は日本橋を出て海沿いを南へ下ります。高輪大木戸が江戸の出入口で、その先が東海道最初の宿場・品川宿。道のすぐ脇はもう海で、品川から大森の遠浅では海苔が育てられていました。ペリー来航を受けて、品川沖には台場が築かれます。"},
+ {y:"1872",t:"海の上を走った鉄道",k:"1868〜1899　明治前半",
+  s:"1872年、新橋〜横浜に日本初の鉄道が開業。高輪の土地を軍が手放さなかったため、約2.7kmは海の上に築いた堤の上を走りました。東海道のすぐ横、波打ち際の沖を汽車が行く光景です。大森駅が開業し、モースが大森貝塚を発見します。"},
+ {y:"1900",t:"電車と埋立のはじまり",k:"1900〜1922　明治末〜大正",
+  s:"1903年に品川〜新橋で路面電車が走り、翌年には京浜電気鉄道（いまの京急）が品川まで延びます。1914年に東京駅が開業すると、新橋停車場は汐留の貨物駅に。築堤の外側の海も少しずつ埋め立てられていきます。"},
+ {y:"1923",t:"震災、埋立、そして飛行場",k:"1923〜1944　震災復興から戦時へ",
+  s:"品川沖では1925〜32年に大規模な埋立が進み、海岸線が大きく沖へ動きます。1931年、羽田の干潟の先に東京飛行場が開港しました。1932年に品川区・大森区が誕生し、東京市の一部になります。"},
+ {y:"1945",t:"接収された空港",k:"1945〜1956　戦後",
+  s:"敗戦後、羽田は連合国軍に接収され「ハネダ・エアベース」に。周辺の住民には48時間以内の立ち退きが命じられました。1952年に大部分が返還されて「東京国際空港」と改称。大井には競馬場ができます。"},
+ {y:"1958",t:"五輪インフラが湾岸に集まる",k:"1957〜1970　高度成長期",
+  s:"1958年に東京タワーが完成。1964年には東京モノレール、首都高羽田線、東海道新幹線がそろって開業し、海沿いの細い帯に高速の交通が重なります。1968年には浅草線が京急と直通し、1970年には浜松町に高さ152mの世界貿易センタービル。都電は姿を消し始めます。"},
+ {y:"1971",t:"コンテナ埠頭と沖へ出る空港",k:"1971〜1992　海がさらに遠くなる",
+  s:"大井にコンテナ埠頭が広がり、海岸線はさらに沖へ。1978年に成田が開港して国際線が移ると、羽田は国内線中心の空港になります。1986年には汐留貨物駅が廃止。1988年、羽田は新A滑走路で沖合へ拡張を始めました。"},
+ {y:"1993",t:"空港直結と駅前の超高層",k:"1993〜2009　再開発の時代",
+  s:"1993年に羽田のビッグバードが完成し、1998年には京急が空港ターミナルに乗り入れます。品川駅東口にインターシティ、汐留の貨物駅跡には超高層ビル群。ゆりかもめ、りんかい線、新幹線品川駅と、線路が一気に増えました。"},
+ {y:"2010",t:"世界への玄関口へ",k:"2010〜現在",
+  s:"2010年、羽田はD滑走路の完成とともに再び国際空港に。2019年には品川の工事現場から150年前の高輪築堤が出土し、2020年に高輪ゲートウェイ駅、2025年に車両基地跡の新しい街がまちびらき。リニア中央新幹線や羽田空港アクセス線など、次の線路も計画されています。"}
+];
+
+const ROAD_=320;
+const LM=[
+ {n:"日本橋",y:"—",s:0,x:40,py:320,m:1,note:"五街道の起点"},
+ {n:"増上寺",y:"—",s:0,x:245,py:292},
+ {n:"高輪大木戸",y:"1710",s:0,x:340,py:320,m:1,note:"江戸の出入口"},
+ {n:"泉岳寺",y:"—",s:0,x:372,py:296},
+ {n:"品川宿",y:"—",s:0,x:495,py:320,m:1,note:"東海道の第一宿"},
+ {n:"品川宿の問屋場（人馬の継立て）",sn:"問屋場",y:"—",s:0,x:512,py:334,end:1,gy:"1872",why:"宿駅伝馬制度の廃止で役目を終える"},
+ {n:"品川台場",y:"1853",s:0,x:368,py:392,note:"御殿山を削った土で築造"},
+ {n:"鈴ヶ森刑場",y:"—",s:0,x:650,py:320,end:1,gy:"1871",why:"刑場が廃止される"},
+ {n:"大森の海苔養殖",sn:"海苔ひび",y:"—",s:0,x:735,py:368,end:5,gy:"1962",why:"埋立と汚染で漁業権を放棄し、江戸以来の海苔づくりが終わる"},
+ {n:"穴守稲荷と羽田の門前町",sn:"穴守稲荷",y:"—",s:0,x:955,py:418,end:4,gy:"1945",why:"GHQの命令で約1200世帯が48時間以内に退去。神社も移転"},
+ {n:"新橋停車場",y:"1872",s:1,x:180,py:336,m:1,end:2,gy:"1914",why:"旅客の玄関を東京駅に譲り、汐留の貨物駅に"},
+ {n:"高輪築堤",y:"1872",s:1,x:330,py:350,note:"海上の線路",end:3,gy:"1920年代〜",why:"周りの海が埋め立てられ、地中に埋もれる"},
+ {n:"品川停車場",y:"1872",s:1,x:462,py:338},
+ {n:"銀座煉瓦街",y:"1877",s:1,x:130,py:320},
+ {n:"大森駅",y:"1876",s:1,x:720,py:332},
+ {n:"大森貝塚",y:"1877",s:1,x:705,py:298},
+ {n:"京浜電気鉄道の初代品川（八ツ山）駅",sn:"八ツ山駅",y:"1904",s:2,x:480,py:306,end:3,gy:"1924",why:"国道改修で南へ移り、北品川駅に"},
+ {n:"京浜電気鉄道 穴守線",sn:"穴守線",y:"1902",s:2,x:905,py:352,note:"穴守稲荷への参拝客のための線路",end:4,gy:"1945",why:"空港の接収で終点一帯が失われる（1998年に空港線として復活）"},
+ {n:"東京駅",y:"1914",s:2,x:52,py:338},
+ {n:"汐留駅（旧新橋停車場）",sn:"汐留駅",y:"1914",s:2,x:185,py:350,end:6,gy:"1986",why:"貨物駅が廃止。跡地はのちの汐留再開発へ"},
+ {n:"京浜電気鉄道 高輪駅",sn:"京浜 高輪駅",y:"1925",s:3,x:440,py:318,note:"第一京浜の路上を電車が走ったターミナル",end:4,gy:"1933",why:"品川駅構内への乗り入れで廃止"},
+ {n:"品川埋立地",y:"1925〜32",s:3,x:565,py:362},
+ {n:"勝島の埋立開始（海軍による人工島）",sn:"勝島",y:"1939",s:3,x:690,py:422},
+ {n:"築地市場",y:"1935",s:3,x:150,py:372,end:8,gy:"2018",why:"豊洲市場へ移転"},
+ {n:"穴守稲荷の大鳥居",sn:"大鳥居",y:"1929",s:3,x:945,py:405,end:7,gy:"1999",why:"撤去できず空港の駐車場に残り続けたが、滑走路整備で弁天橋そばへ移設"},
+ {n:"東京飛行場（羽田）",sn:"東京飛行場",y:"1931",s:3,x:930,py:394,m:1,end:4},
+ {n:"東京国際空港に改称",sn:"東京国際空港",y:"1952",s:4,x:935,py:414,m:1},
+ {n:"羽田の旧ターミナルビル",sn:"旧ターミナル",y:"1955",s:4,x:915,py:420,end:7,gy:"1993",why:"沖合のビッグバードに役目を譲る"},
+ {n:"大井競馬場（勝島の埋立地に開設）",sn:"大井競馬場",y:"1950",s:4,x:665,py:412},
+ {n:"東京タワー",y:"1958",s:5,x:258,py:288,h:333,m:1},
+ {n:"東京モノレール",y:"1964",s:5,x:580,py:440},
+ {n:"大井競馬場前駅（海の上の仮設駅、1967年に常設化）",sn:"大井競馬場前駅",y:"1965",s:5,x:680,py:466,note:"開催日のみ営業"},
+ {n:"首都高速羽田線",sn:"首都高",y:"1964",s:5,x:640,py:378},
+ {n:"東海道新幹線",sn:"新幹線",y:"1964",s:5,x:600,py:337},
+ {n:"都営浅草線（京急と直通）",sn:"浅草線",y:"1968",s:5,x:300,py:327},
+ {n:"世界貿易センタービル",sn:"世界貿易センター",y:"1970",s:5,x:236,py:344,h:152,end:8,gy:"2021〜",why:"解体され、建て替えへ"},
+ {n:"大井コンテナふ頭",sn:"大井ふ頭",y:"1970年代",s:6,x:600,py:500},
+ {n:"羽田 新A滑走路（沖合展開）",sn:"沖合展開",y:"1988",s:6,x:945,py:500},
+ {n:"羽田 ビッグバード",sn:"ビッグバード",y:"1993",s:7,x:935,py:470},
+ {n:"ゆりかもめ",y:"1995",s:7,x:300,py:420},
+ {n:"レインボーブリッジ",y:"1993",s:7,x:360,py:500},
+ {n:"お台場（臨海副都心）",sn:"お台場",y:"1990年代",s:7,x:410,py:566,note:"埋立地に生まれた新しい街"},
+ {n:"城南島海浜公園",y:"1991",s:7,x:720,py:570,note:"羽田空港の北約1kmの埋立島"},
+ {n:"京急 羽田空港駅",sn:"京急空港線",y:"1998",s:7,x:880,py:360},
+ {n:"大鳥居を弁天橋そばへ移設",sn:"大鳥居（移設）",y:"1999",s:7,x:905,py:368},
+ {n:"品川インターシティ",y:"1998",s:7,x:448,py:352,h:144,m:1},
+ {n:"汐留の超高層（電通本社ビル）",sn:"汐留",y:"2002",s:7,x:190,py:364,h:213},
+ {n:"りんかい線",y:"2002",s:7,x:500,py:432},
+ {n:"新幹線 品川駅",sn:"新幹線品川駅",y:"2003",s:7,x:455,py:340},
+ {n:"D滑走路・再国際化",sn:"D滑走路",y:"2010",s:8,x:950,py:562,m:1},
+ {n:"高輪築堤が出土",sn:"築堤出土",y:"2019",s:8,x:345,py:350},
+ {n:"高輪ゲートウェイ駅",sn:"高輪GW駅",y:"2020",s:8,x:392,py:340},
+ {n:"THE LINKPILLAR 1（高輪ゲートウェイシティ）",sn:"LINKPILLAR 1",y:"2025",s:8,x:405,py:356,h:161},
+ {n:"リニア中央新幹線 品川駅",sn:"リニア",y:"計画中",s:8,x:455,py:282},
+ {n:"羽田空港アクセス線",sn:"アクセス線",y:"計画中",s:8,x:700,py:432}
+];
+
+const MODES=[
+ {n:"🚶 徒歩",s:0},{n:"駕籠",s:0,end:1},{n:"🐎 伝馬",s:0,end:1},{n:"🛶 舟",s:0,end:5},
+ {n:"🚂 鉄道",s:1},{n:"人力車",s:1,end:3},{n:"鉄道馬車",s:1,end:2},
+ {n:"🚋 路面電車",s:2,end:6},{n:"郊外電車（京急）",s:2},
+ {n:"✈️ 飛行機",s:3},{n:"🚌 バス",s:3},{n:"🚕 タクシー",s:3},
+ {n:"🚗 マイカー",s:5},{n:"🛣️ 首都高",s:5},{n:"🚄 新幹線",s:5},{n:"🚝 モノレール",s:5},{n:"🚇 地下鉄",s:5},
+ {n:"🚛 コンテナ物流",s:6},{n:"新交通（ゆりかもめ）",s:7},{n:"空港直結の鉄道",s:7},
+ {n:"🚲 シェアサイクル",s:8},{n:"🛴 電動キックボード",s:8},{n:"自動運転バス（実証）",s:8}
+];
+/* ================= geometry ================= */
+const AXIS=[["日本橋",40],["銀座",130],["新橋",180],["浜松町",240],["田町",300],["高輪",370],["品川",455],["大井",570],["鈴ヶ森",650],["大森",720],["平和島",800],["羽田",935]];
+const ROAD=320,P0=272,OX=215,OY=150,HK=0.45;
+const XM=1130;
+const P=(u,py,h=0)=>{const v=py-P0;return [XM-(OX+u*0.9-v*0.6), OY+u*0.26+v*0.55-h*HK]};
+const CX=[0,120,200,260,340,480,560,700,800,880,1000];
+const COAST=[
+ [420,405,355,338,336,338,340,344,348,425,435],[420,405,355,338,336,338,340,344,348,425,435],
+ [425,412,372,356,350,346,342,344,348,425,435],[430,420,398,392,388,384,374,352,350,425,435],
+ [432,422,400,396,392,388,378,356,355,428,437],[440,430,440,440,452,470,438,438,460,445,445],
+ [445,440,450,455,470,520,532,520,500,470,440],[450,445,455,460,475,530,545,540,520,490,460],
+ [450,445,455,460,475,530,548,545,525,495,465]];
+const coastAtArr=(c,u)=>{for(let k=1;k<CX.length;k++)if(u<=CX[k]){const t=(u-CX[k-1])/(CX[k]-CX[k-1]);return c[k-1]+(c[k]-c[k-1])*t}return c[c.length-1]};
+const AIRR=[null,null,null,[905,386,50,16],[890,380,90,45],[885,378,108,62],[880,378,118,142],[880,378,118,150],[880,378,118,150]];
+const ZONES=[[0,160],[160,285],[285,425],[425,525],[525,700],[700,870],[870,1000]];
+const TOWN=[[8,7,6,7,4,5,3],[12,8,6,7,4,5,3],[20,12,8,9,5,6,4],[31,24,12,10,8,8,5],[24,14,10,8,6,6,5],[31,31,24,20,15,12,8],[45,40,31,30,24,20,10],[60,60,48,45,32,28,12],[70,70,60,52,38,32,14]];
+const IND=[0,0,4,6,6,12,15,20,24];
+const ISL=[{s:6,poly:[[320,532],[480,526],[492,600],[312,600]],base:[0,0,0,0,0,0,0,22,30]},
+           {s:6,poly:[[662,550],[776,542],[782,592],[666,598]],base:[0,0,0,0,0,0,8,12,14]}];
+function inPoly(x,y,pl){let c=false;for(let a=0,b=pl.length-1;a<pl.length;b=a++){const [xi,yi]=pl[a],[xj,yj]=pl[b];if(((yi>y)!==(yj>y))&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)c=!c}return c}
+const LINES=[
+ {s:0,k:"road",p:[[0,ROAD],[1000,314]]},
+ {s:1,e:3,k:"tsuki",p:[[250,346],[462,346]]},
+ {s:1,k:"rail",p:[[180,336],[250,346],[462,346],[482,336],[1000,332]]},
+ {s:2,k:"rail",p:[[50,336],[180,336]]},
+ {s:1,e:2,k:"tram",p:[[40,ROAD],[180,ROAD]]},
+ {s:2,e:6,k:"tram",p:[[40,ROAD+1],[500,ROAD]]},
+ {s:2,k:"rail",p:[[480,307],[1000,303]]},
+ {s:2,e:4,k:"rail",p:[[860,305],[905,352],[955,418]]},
+ {s:3,k:"rail",p:[[380,308],[480,307]]},
+ {s:5,k:"sub",p:[[40,326],[380,326],[380,308]]},
+ {s:5,k:"hsr",p:[[50,340],[180,340],[482,340],[1000,336]]},
+ {s:5,k:"hwy",el:16,deck:8,p:[[200,362],[460,372],[700,386],[880,398],[930,418]]},
+ {s:5,k:"mono",el:10,deck:3.5,p:[[238,352],[460,382],[580,440],[680,466],[740,448],[890,418],[925,440]]},
+ {s:7,k:"mono",el:10,deck:3.5,p:[[925,440],[935,470]]},
+ {s:7,k:"bridge",deck:9,p:[[350,462,14],[355,482,34],[360,500,46],[365,518,34],[370,538,14]]},
+ {s:7,k:"rail",p:[[870,305],[895,350],[915,410],[935,466]]},
+ {s:7,k:"newtr",el:10,p:[[185,345],[230,382],[300,420],[345,452],[355,482],[365,518],[385,572]]},
+ {s:7,k:"sub",p:[[300,598],[380,530],[480,430],[570,332]]},
+ {s:8,k:"plan",p:[[455,336],[455,276]]},
+ {s:8,k:"plan",p:[[300,350],[400,390],[500,415],[700,432],[925,452]]}];
+const LST={road:["ink",4,.5],tsuki:["muted",7,.55],rail:["ink",1.7,1],tram:["accent",1.6,1,[1.5,3]],plan:["accent",1.8,1,[6,4]],
+ bridge:["ink",2,.8],sub:["subway",1.8,1,[5,2]],hsr:["hsr",2.6,1],hwy:["ink",3.2,.75],mono:["hsr",2,1,[4,2]],newtr:["hsr",2,1]};
+
+/* camera tour per era: route in plan coords, stops = indices into route, caps = captions */
+const TOUR=[
+ {r:[[40,320],[190,320],[340,322],[495,320]],st:[0,2,3],c:["日本橋 — 五街道の起点","高輪大木戸 — 江戸の出入口。沖には品川台場","品川宿 — 東海道の最初の宿場"]},
+ {r:[[180,336],[250,346],[330,346],[462,346],[462,338],[650,322]],st:[0,2,4,5],c:["1872 新橋停車場 — 日本初の鉄道の起点","高輪築堤 — 海の上に築いた堤を汽車が走った","品川停車場。宿場の問屋場は1872年の伝馬制度廃止で役目を終える","1871 鈴ヶ森刑場が廃止される"]},
+ {r:[[52,338],[180,336],[330,320],[480,307],[900,340]],st:[0,1,3,4],c:["1914 東京駅が開業","旅客の玄関は東京駅へ。新橋停車場は汐留の貨物駅に","1904 京浜電気鉄道が品川（八ツ山）へ","1902 穴守稲荷の参拝客を運ぶ穴守線"]},
+ {r:[[330,346],[440,318],[480,307],[670,412],[930,394]],st:[0,1,3,4],c:["高輪築堤は埋立で地中へ（2019年に出土することになる）","1925〜33 京浜の高輪駅 — 第一京浜の路上を電車が走ったターミナル。八ツ山駅も1924年に移転","1939 海軍が勝島の埋立を始める","1931 羽田に東京飛行場。穴守稲荷の門前は行楽地としてにぎわう"]},
+ {r:[[955,418],[930,414],[800,405],[665,412]],st:[0,1,3],c:["1945 GHQの命令で羽田の3町・約1200世帯が48時間以内に退去。穴守線の終点も失われ、大鳥居だけが残された","接収された飛行場 → 1952 東京国際空港に","1950 勝島の埋立地に大井競馬場"]},
+ {r:[[250,300],[238,352],[460,382],[580,440],[680,466],[735,390],[890,418],[925,440]],st:[0,2,4,5,7],c:["1958 東京タワー／1970 世界貿易センタービル","1964 新幹線・首都高・モノレールが湾岸に並ぶ","1965 大井競馬場前駅 — まだ海だった場所に建てた仮設駅（開催日のみ営業）","1962 大森の海苔養殖が終わる — 江戸から続いた海苔の海は埋立地に","モノレールで羽田へ"]},
+ {r:[[185,350],[600,500],[945,500]],st:[0,1,2],c:["1986 汐留貨物駅が廃止 — 日本初の鉄道の起点が役目を終える。都電もこの時代に姿を消した","1970年代 大井コンテナふ頭","1988 羽田が沖合へ拡張"]},
+ {r:[[190,364],[375,548],[400,420],[448,352],[640,440],[720,570],[935,466],[910,372]],st:[0,1,3,5,6,7],c:["2002 汐留の貨物駅跡に超高層群","1993 レインボーブリッジ — ゆりかもめで臨海副都心（お台場）へ","1998 品川インターシティ／2003 新幹線品川駅","1991 城南島海浜公園 — 羽田空港の北、埋立島の先端","1993 ビッグバード — 旧ターミナルは役目を終える／1998 京急が空港に直結","1999 空港に残っていた大鳥居を弁天橋そばへ移設"]},
+ {r:[[150,372],[236,344],[398,350],[455,300],[455,336],[700,432],[950,562]],st:[0,1,2,3,6],c:["2018 築地市場が豊洲へ移転","2021〜 世界貿易センタービルを解体、建て替えへ","2019 地中から高輪築堤が出土／2020 高輪ゲートウェイ駅","品川 — リニア中央新幹線（計画中）","2010 D滑走路の完成とともに再び国際空港へ"]}];
+
+/* ================= helpers ================= */
+const $=id=>document.getElementById(id);
+const lerp=(a,b,t)=>a+(b-a)*t, clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+function hash(a,b){let h=(a*374761393+b*668265263)^0x5bd1e995;h=Math.imul(h^(h>>>13),1274126177);return ((h^(h>>>16))>>>0)/4294967295}
+function segDist(x,y,a,b){const dx=b[0]-a[0],dy=b[1]-a[1];const t=clamp(((x-a[0])*dx+(y-a[1])*dy)/(dx*dx+dy*dy||1),0,1);return Math.hypot(x-a[0]-t*dx,y-a[1]-t*dy)}
+function nearLine(x,y,i){for(const L of LINES){if(L.s>i||L.k==="plan"||(L.e!=null&&i>=L.e&&L.k!=="road"))continue;
+  for(let k=1;k<L.p.length;k++)if(segDist(x,y,L.p[k-1],L.p[k])<(L.k==="road"?8:L.k==="tram"?0:6))return true}return false}
+function zoneBase(u,i){for(let z=0;z<ZONES.length;z++)if(u<ZONES[z][1])return TOWN[i][z];return TOWN[i][6]}
+
+/* ================= precompute buildings ================= */
+const NS_=STEPS.length;
+const TW=LM.filter(l=>l.h);
+const cells=[];
+for(let u=10;u<990;u+=18)for(let py=274;py<596;py+=14){
+  const H=[];let any=false;const c0=coastAtArr(COAST[0],u);
+  for(let i=0;i<NS_;i++){
+    let h=0;const a=AIRR[i];
+    const ok=!(py+12>=coastAtArr(COAST[i],u)-2)&&!(Math.abs(py+6-ROAD)<7)&&
+      !(a&&u+12>a[0]&&u<a[0]+a[2]&&py+12>a[1]&&py<a[1]+a[3])&&!nearLine(u+6,py+5,i)&&!(i>=4&&u>875&&py>350)&&!(i>=4&&((u+6-667)/40)**2+((py+5-414)/16)**2<1)&&
+      !TW.some(t=>t.s<=i&&!(t.end!=null&&i>=t.end+1)&&Math.abs(t.x-(u+6))<16&&Math.abs(t.py-(py+5))<14);
+    const isl=ISL.find(q=>i>=q.s&&inPoly(u+6,py+5,q.poly));
+    if(isl&&!nearLine(u+6,py+5,i)){const r=hash(u,py);if(r>.45&&isl.base[i])h=Math.max(3,isl.base[i]*(.4+hash(py,u)))}
+    else if(ok){const r=hash(u,py),dist=Math.abs(py-ROAD),rec=py>c0-4;
+      if(!((i<=2&&dist>44&&r<.6)||r<.12||(rec&&r<.5))){const base=rec?IND[i]:zoneBase(u,i);
+        if(base){const f=rec?1:(dist<32?1:dist<80?.7:.5);h=Math.max(2,base*f*(.5+hash(py,u)*.9))}}}
+    H.push(h);if(h)any=true}
+  if(any)cells.push({u0:u,p0:py,u1:u+12,p1:py+9,H})}
+[[356,486],[364,514]].forEach(([x,y])=>{cells.push({u0:x-2,p0:y-3,u1:x+2,p1:y+3,H:STEPS.map((_,i)=>i>=7?126:0),bt:1})});
+TW.forEach(l=>{const H=STEPS.map((_,i)=>i>=l.s&&!(l.end!=null&&i>=l.end)?l.h:0);cells.push({u0:l.x-7,p0:l.py-7,u1:l.x+7,p1:l.py+7,H,tw:l})});
+cells.forEach(c=>{c.d=P(c.u1,c.p1)[1];c.pts=[P(c.u0,c.p0),P(c.u1,c.p0),P(c.u1,c.p1),P(c.u0,c.p1)]});
+// elevated decks split into short pieces, sorted together with buildings
+LINES.forEach((L,li)=>{if(!L.deck)return;const pts=L.p.map(q=>[q[0],q[1],q[2]!=null?q[2]:L.el]);
+  let tot=0;for(let j=1;j<pts.length;j++)tot+=Math.hypot(pts[j][0]-pts[j-1][0],pts[j][1]-pts[j-1][1]);
+  const n=Math.max(2,Math.round(tot/14));const at=f=>{let r=f*tot;for(let j=1;j<pts.length;j++){const d=Math.hypot(pts[j][0]-pts[j-1][0],pts[j][1]-pts[j-1][1]);if(r<=d||j===pts.length-1){const t=d?clamp(r/d,0,1):0;return [0,1,2].map(c=>lerp(pts[j-1][c],pts[j][c],t))}r-=d}};
+  for(let k=0;k<n;k++){const a=at(k/n),b=at((k+1)/n);const dx=b[0]-a[0],dy=b[1]-a[1],ln=Math.hypot(dx,dy)||1,nx=-dy/ln*L.deck/2,ny=dx/ln*L.deck/2;
+    const A=[a[0]+nx,a[1]+ny],B=[b[0]+nx,b[1]+ny],Cc=[b[0]-nx,b[1]-ny],Dd=[a[0]-nx,a[1]-ny];
+    const front=(A[1]+B[1])>(Cc[1]+Dd[1])?[A,B]:[Dd,Cc];
+    cells.push({deck:1,li,f:(k+1)/n,a,b,A,B,Cc,Dd,front,pil:k%3===0,d:P((a[0]+b[0])/2,Math.max(A[1],B[1],Cc[1],Dd[1]))[1]})}});
+cells.sort((a,b)=>a.d-b.d);
+
+/* ================= timeline ================= */
+const D={change:2.6,fly:1.5,hold:2.4,flow:2.2,back:1.5,rest:.9};
+let SEGS=[],TOTAL=0,ERA0=[];
+function buildTimeline(){
+  SEGS=[];let t=0;ERA0=[];
+  const add=(i,type,dur,extra={})=>{SEGS.push(Object.assign({i,type,t0:t,t1:t+dur},extra));t+=dur};
+  TOUR.forEach((T,i)=>{ERA0.push(t);add(i,"change",D.change);add(i,"fly",D.fly,{k:0});
+    T.st.forEach((_,k)=>{add(i,"hold",D.hold,{k});if(k<T.st.length-1)add(i,"flow",D.flow,{k})});
+    add(i,"back",D.back,{k:T.st.length-1});add(i,"rest",D.rest)});
+  ERA0.push(t);TOTAL=t}
+buildTimeline();
+
+/* ================= canvas ================= */
+const cv=$("cv"),ctx=cv.getContext("2d");
+let W=0,Hh=0,DPR=1,C={};
+const VARS=["paper","sheet","ink","muted","line","land","high","new-land","water","water-ink","accent","subway","hsr","burn","air","b-top","b-u","b-v","b-edge","t-top","t-u","t-v"];
+function readColors(){const cs=getComputedStyle(document.documentElement);VARS.forEach(v=>C[v]=cs.getPropertyValue("--"+v).trim());
+  const pc=document.createElement("canvas");pc.width=pc.height=8;const x=pc.getContext("2d");x.strokeStyle=C.burn;x.lineWidth=2.2;
+  x.beginPath();x.moveTo(0,8);x.lineTo(8,0);x.moveTo(-2,2);x.lineTo(2,-2);x.moveTo(6,10);x.lineTo(10,6);x.stroke();C.hatch=ctx.createPattern(pc,"repeat")}
+function resize(){DPR=Math.min(2.5,window.devicePixelRatio||1);W=cv.clientWidth;Hh=cv.clientHeight;cv.width=W*DPR;cv.height=Hh*DPR;dirty=true}
+const PHONE=()=>W<640;
+function OV(){const asp=W/Hh;return {x:562,y:298,w:Math.max(1130,625*asp)*1.05}}
+const smin=(a,b,k)=>{const m=Math.min(a,b);return m-k*Math.log(Math.exp((m-a)/k)+Math.exp((m-b)/k))},smax=(a,b,k)=>-smin(-a,-b,k);
+function fitCam(c){const lo=10+c.w/2,hi=1125-c.w/2,mid=(lo+hi)/2,half=(hi-lo)/2;if(half<=1)return {x:mid,y:c.y,w:c.w};const z=(c.x-mid)/half;const x=mid+half*(Math.abs(z)<.6?z:Math.sign(z)*(.6+.4*Math.tanh((Math.abs(z)-.6)/.4)));return {x,y:c.y,w:c.w}}
+function softTop(i,x,w){let m=Infinity;const pad=34*w/W,R=w*.45;
+  TW.forEach(l=>{if(l.s>i||(l.end!=null&&i>=l.end))return;const q=P(l.x,l.py,l.h);const wg=clamp(1-(Math.abs(q[0]-x)-R)/200,0,1);
+    if(wg>0)m=Math.min(m,q[1]-pad+(1-wg)*600)});return m}
+function frameOn(i,x,subY,w0){const asp=W/Hh;let w=w0,hv=w/asp;const top=softTop(i,x,w0);
+  const bm=PHONE()?.38:.3;if(isFinite(top)){const need=(subY-top)/(1-bm);if(need>hv){hv=Math.min(need,w0*1.6/asp,1060/asp);w=hv*asp}}
+  let cy=subY+.16*hv;if(isFinite(top))cy=Math.min(cy,top+hv/2);cy=Math.max(cy,subY-(.5-bm)*hv);cy=Math.min(cy,612-hv/2);cy=Math.max(cy,subY-hv/2+hv*.12);
+  return {x,y:cy,w}}
+function stopRaw(i,k){const T=TOUR[i],q=T.r[T.st[k]];const [x,y]=P(q[0],q[1],40);return frameOn(i,x,y,PHONE()?400:580)}
+function stopCam(i,k){return fitCam(stopRaw(i,k))}
+function lerpCam(a,b,t){return {x:lerp(a.x,b.x,t),y:lerp(a.y,b.y,t),w:Math.exp(lerp(Math.log(a.w),Math.log(b.w),t))}}
+const RC={};
+function chaikin(a,n){for(let r=0;r<n;r++){const o=[a[0]];for(let j=0;j<a.length-1;j++){const p=a[j],q=a[j+1];o.push([p[0]*.75+q[0]*.25,p[1]*.75+q[1]*.25],[p[0]*.25+q[0]*.75,p[1]*.25+q[1]*.75])}o.push(a[a.length-1]);a=o}return a}
+function routeAt(i,k,t){const T=TOUR[i];const key=i+"_"+k;const pts=RC[key]||(RC[key]=chaikin(T.r.slice(T.st[k],T.st[k+1]+1).map(q=>P(q[0],q[1],40)),4));
+  let L=0;const seg=[];for(let j=1;j<pts.length;j++){const d=Math.hypot(pts[j][0]-pts[j-1][0],pts[j][1]-pts[j-1][1]);seg.push(d);L+=d}
+  let r=t*L;for(let j=0;j<seg.length;j++){if(r<=seg[j]||j===seg.length-1){const f=seg[j]?clamp(r/seg[j],0,1):1;return [lerp(pts[j][0],pts[j+1][0],f),lerp(pts[j][1],pts[j+1][1],f)]}r-=seg[j]}}
+function rawCam(t){return state(t,true).cam}
+function smoothCam(t){let x=0,y=0,lw=0,n=0;for(let d=-.3;d<=.301;d+=.1){const c=rawCam(clamp(t+d,0,TOTAL));x+=c.x;y+=c.y;lw+=Math.log(c.w);n++}return {x:x/n,y:y/n,w:Math.exp(lw/n)}}
+function segAt(t){for(const s of SEGS)if(t<s.t1)return s;return SEGS[SEGS.length-1]}
+function state(t,raw){
+  const s=segAt(t),p=clamp((t-s.t0)/(s.t1-s.t0),0,1),e=ease(p),i=s.i;let cam,stop=-1,cap=null;
+  if(s.type==="change"||s.type==="rest")cam=OV();
+  else if(s.type==="fly")cam=lerpCam(OV(),stopCam(i,0),e);
+  else if(s.type==="hold"){cam=stopCam(i,s.k);stop=s.k;cap=TOUR[i].c[s.k]}
+  else if(s.type==="flow"){const a=stopRaw(i,s.k),b=stopRaw(i,s.k+1);const T0=TOUR[i];
+    const pa=P(...T0.r[T0.st[s.k]],40),pb=P(...T0.r[T0.st[s.k+1]],40);const [rx,ry]=routeAt(i,s.k,e);
+    const base=lerpCam(a,b,e),bend=Math.pow(Math.sin(Math.PI*p),2);
+    cam=fitCam({x:base.x+(rx-lerp(pa[0],pb[0],e))*.8,y:base.y+(ry-lerp(pa[1],pb[1],e))*.8,w:Math.min(1080,base.w*(1+.3*bend))});cap=p>.6?TOUR[i].c[s.k+1]:null}
+  else if(s.type==="back")cam=lerpCam(stopCam(i,s.k),OV(),e);
+  if(raw)return {cam};
+  // focus: what to blink
+  const T=TOUR[i];let pt=null,amp=1;
+  if(s.type==="hold")pt=T.r[T.st[s.k]];
+  else if(s.type==="flow"){const a=T.r[T.st[s.k]],b=T.r[T.st[s.k+1]];pt=[lerp(a[0],b[0],e),lerp(a[1],b[1],e)]}
+  else if(s.type==="fly"){pt=T.r[T.st[0]];amp=e}
+  const fLM=new Set(),fL=new Set();
+  if(pt){LM.forEach((l,j)=>{if((l.s===i||l.end===i)&&Math.hypot(l.x-pt[0],l.py-pt[1])<(s.type==="hold"?140:90))fLM.add(j)});
+    LINES.forEach((L,j)=>{if(L.s!==i&&L.e!==i)return;for(let k=1;k<L.p.length;k++)if(segDist(pt[0],pt[1],L.p[k-1],L.p[k])<70){fL.add(j);break}})}
+  else if(s.type==="change"&&e>.4){amp=.7;LM.forEach((l,j)=>{if(l.s===i||l.end===i)fLM.add(j)});LINES.forEach((L,j)=>{if(L.s===i)fL.add(j)})}
+  return {i,cp:s.type==="change"?e:1,cam,stop,cap,type:s.type,fLM,fL,amp}}
+
+/* ================= drawing ================= */
+let X0=0,Y0=0,SC=1,PULSE=0;
+const S=q=>[(q[0]-X0)*SC,(q[1]-Y0)*SC];
+function poly(ptsP,fill,stroke,lw){ctx.beginPath();ptsP.forEach((q,j)=>{const [x,y]=S(q);j?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.closePath();
+  if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw||1;ctx.stroke()}}
+function plan(a){return a.map(q=>P(q[0],q[1],q[2]||0))}
+function coastLerp(i,cp){const a=COAST[Math.max(0,i-1)],b=COAST[i];return b.map((v,k)=>lerp(a[k],v,cp))}
+function draw(st){
+  const {i,cp,cam}=st;PULSE=playing?(performance.now()%1200)/1200:.35;
+  SC=W/cam.w;X0=cam.x-cam.w/2;Y0=cam.y-(Hh/SC)/2;
+  ctx.setTransform(DPR,0,0,DPR,0,0);ctx.clearRect(0,0,W,Hh);
+  ctx.fillStyle=C.sheet;ctx.fillRect(0,0,W,Hh);
+  const lwK=clamp(SC*1.1,.6,2.4);
+  // ground
+  poly(plan([[0,P0],[1000,P0],[1000,600],[0,600]]),C.land);
+  poly(plan([[0,P0],[1000,P0],[1000,294],[0,294]]),C.high);
+  const c=coastLerp(i,cp),pv=COAST[Math.max(0,i-1)];
+  if(i>0&&COAST[i].some((v,k)=>v>pv[k]))poly(plan([...CX.map((x,k)=>[x,pv[k]]),...CX.map((x,k)=>[x,c[k]]).reverse()]),C["new-land"]);
+  if(i===4){ctx.globalAlpha=.5*cp;poly(plan([[0,P0],[560,P0],[560,400],[0,400]]),C.hatch);ctx.globalAlpha=1}
+  const coastPts=CX.map((x,k)=>[x,c[k]]);
+  poly(plan([...coastPts,[1000,600],[0,600]]),C.water);
+  ctx.beginPath();plan(coastPts).forEach((q,j)=>{const [x,y]=S(q);j?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.strokeStyle=C["water-ink"];ctx.lineWidth=1.3*lwK;ctx.stroke();
+  ISL.forEach(q=>{if(i<q.s)return;ctx.globalAlpha=i===q.s?cp:1;poly(plan(q.poly),i===q.s?C["new-land"]:C.land,C["water-ink"],1.1*lwK);ctx.globalAlpha=1});
+  // Katsushima island (reclaimed from 1939) until the coast swallows it
+  if(i===3||i===4){const isl=plan([[610,394],[718,388],[724,434],[616,440]]);
+    ctx.globalAlpha=i===3?cp:1;poly(isl,i===3?C["new-land"]:C.land,C["water-ink"],1.1*lwK);
+    ctx.globalAlpha=1}
+  if(i>=4){ctx.globalAlpha=i===4?cp:1;const oval=[];for(let a=0;a<6.3;a+=.3)oval.push([667+34*Math.cos(a),414+12*Math.sin(a)]);poly(plan(oval),C.land,C.muted,1.6*lwK);ctx.globalAlpha=1}
+  // airport
+  const a1=AIRR[i],a0=AIRR[Math.max(0,i-1)];
+  if(a1){const a=a0&&i>0?a1.map((v,k)=>lerp(a0[k],v,cp)):[a1[0]+a1[2]/2*(1-cp),a1[1]+a1[3]/2*(1-cp),a1[2]*cp,a1[3]*cp];
+    poly(plan([[a[0],a[1]],[a[0]+a[2],a[1]],[a[0]+a[2],a[1]+a[3]],[a[0],a[1]+a[3]]]),C.air,C.muted,.8);
+    const rw=[[[912,398],[950,390]]];if(i>=6)rw.push([[900,510],[990,400]],[[920,515],[990,470]]);
+    ctx.globalAlpha=i>=6&&i===6?cp:1;rw.forEach((r,j)=>{if(j&&i===6)ctx.globalAlpha=cp;else ctx.globalAlpha=1;strokePts(plan(r),C.muted,3*lwK)});ctx.globalAlpha=1;
+    if(i>=8){ctx.globalAlpha=i===8?cp:1;poly(plan([[900,560],[995,548],[995,562],[900,574]]),C.air,C.muted,.8);ctx.globalAlpha=1}}
+  // ground lines
+  LINES.forEach((L,j)=>{if(!L.el)drawLine(L,i,cp,lwK,st.fL.has(j)?st.amp:0)});
+  // buildings
+  const hi=i;cells.forEach(cl=>{
+    if(cl.deck){drawDeck(cl,i,cp,lwK);return}
+    const h=lerp(i>0?cl.H[i-1]:0,cl.H[i],cp);if(h<.5)return;
+    const [A,B,Cc,Dd]=cl.pts,up=h*HK;
+    const sx=(A[0]-X0)*SC;if(sx<-60||sx>W+60)return;
+    const T=q=>[q[0],q[1]-up];
+    let top=C["b-top"],fu=C["b-u"],fv=C["b-v"];
+    if(cl.bt){top=C["t-top"];fu=C["t-u"];fv=C["t-v"]}
+    if(cl.tw){const nw=cl.tw.s===i;top=nw?C.accent:C["t-top"];fu=nw?shade(C.accent,.62):C["t-u"];fv=nw?shade(C.accent,.8):C["t-v"]}
+    poly([B,Cc,T(Cc),T(B)],fu);poly([Dd,Cc,T(Cc),T(Dd)],fv);poly([T(A),T(B),T(Cc),T(Dd)],top,C["b-edge"],.4)});
+  // elevated
+  LINES.forEach((L,j)=>{if(L.el)drawLine(L,i,cp,lwK,st.fL.has(j)?st.amp:0)});
+  if(i>=7){ctx.globalAlpha=i===7?cp:1;const H=126*(i===7?cp:1);
+    const cab=[[350,462,14],[356,486,H],[360,500,Math.max(46,H*.55)],[364,514,H],[370,538,14]];
+    ctx.strokeStyle=C.ink;ctx.lineWidth=Math.max(1,1.1*lwK);ctx.beginPath();
+    cab.forEach((q,j)=>{const [x,y]=S(P(q[0],q[1],q[2]));j?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();
+    // hangers
+    for(let f=.1;f<1;f+=.1){const u=lerp(350,370,f),py=lerp(462,538,f);const d=S(P(u,py,f<.5?lerp(14,46,f*2):lerp(46,14,(f-.5)*2)));
+      const segs=cab;let j=f<.33?0:f<.5?1:f<.67?2:3;const a=segs[j],b=segs[j+1];const t=clamp((py-a[1])/(b[1]-a[1]),0,1);const c=S(P(u,py,lerp(a[2],b[2],t)));
+      ctx.beginPath();ctx.moveTo(d[0],d[1]);ctx.lineTo(c[0],c[1]);ctx.lineWidth=.7;ctx.stroke()}
+    ctx.globalAlpha=1}
+  drawPole(i,lwK);
+  drawFocus(st);
+  drawLabels(st);
+}
+function drawDeck(c,i,cp,lwK){const L=LINES[c.li];if(L.s>i)return;if(L.s===i&&c.f>cp+1e-6)return;
+  let al=1;if(L.e!=null&&i>=L.e)al=i===L.e?lerp(1,.2,cp):.2;
+  const ha=c.a[2],hb=c.b[2],up=h=>h;const sx=S(P(c.a[0],c.a[1]))[0];if(sx<-80||sx>W+80)return;
+  const col={hwy:[C.muted,C.ink],mono:[C.hsr,C.ink],bridge:[C["b-top"],C.muted]}[L.k]||[C.muted,C.ink];
+  ctx.globalAlpha=al;
+  if(c.pil){const m=[(c.a[0]),(c.a[1])];const g=S(P(m[0],m[1],0)),t=S(P(m[0],m[1],ha-2));ctx.strokeStyle=C.muted;ctx.lineWidth=Math.max(1,(L.deck>5?2.2:1.4)*lwK);ctx.beginPath();ctx.moveTo(g[0],g[1]);ctx.lineTo(t[0],t[1]);ctx.stroke()}
+  const [f1,f2]=c.front;const th=L.k==="bridge"?3:2.2;
+  poly([P(f1[0],f1[1],ha),P(f2[0],f2[1],hb),P(f2[0],f2[1],hb-th),P(f1[0],f1[1],ha-th)],col[1]);
+  poly([P(c.A[0],c.A[1],ha),P(c.B[0],c.B[1],hb),P(c.Cc[0],c.Cc[1],hb),P(c.Dd[0],c.Dd[1],ha)],col[0]);
+  ctx.globalAlpha=1}
+function strokePts(pp,col,lw,dash){ctx.beginPath();pp.forEach((q,j)=>{const [x,y]=S(q);j?ctx.lineTo(x,y):ctx.moveTo(x,y)});
+  ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineCap="round";ctx.lineJoin="round";ctx.setLineDash(dash?dash.map(d=>d*Math.max(1,SC)):[]);ctx.stroke();ctx.setLineDash([])}
+function partial(pp,f){if(f>=1)return pp;let L=0;const d=[];for(let j=1;j<pp.length;j++){d.push(Math.hypot(pp[j][0]-pp[j-1][0],pp[j][1]-pp[j-1][1]));L+=d[j-1]}
+  let r=f*L;const out=[pp[0]];for(let j=1;j<pp.length;j++){if(r>=d[j-1]){out.push(pp[j]);r-=d[j-1]}else{const t=r/d[j-1];out.push([lerp(pp[j-1][0],pp[j][0],t),lerp(pp[j-1][1],pp[j][1],t)]);break}}return out}
+function drawLine(L,i,cp,lwK,fo){
+  if(L.s>i)return;const [col,w,al,dash]=LST[L.k];
+  if(fo){const f0=L.s===i?cp:1;const b=.5+.5*Math.sin(PULSE*Math.PI*2);ctx.globalAlpha=fo*(.18+.42*b);
+    strokePts(partial(L.p.map(q=>P(q[0],q[1],q[2]!=null?q[2]:(L.el||0))),f0),L.e===i?C.muted:C.accent,(w+7)*lwK);ctx.globalAlpha=1}
+  let alpha=al;if(L.e!=null&&i>=L.e)alpha*=i===L.e?lerp(1,.18,cp):.18;
+  const f=L.s===i?cp:1;
+  if(L.el&&!L.deck){ctx.globalAlpha=alpha*.8;L.p.forEach(q=>{const a=S(P(q[0],q[1])),b=S(P(q[0],q[1],L.el*Math.min(1,f*1.5)));ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.strokeStyle=C.muted;ctx.lineWidth=1;ctx.stroke()})}
+  if(L.deck)return;
+  ctx.globalAlpha=alpha;strokePts(partial(L.p.map(q=>P(q[0],q[1],L.el||0)),f),C[col],w*lwK,dash);ctx.globalAlpha=1}
+function drawPole(i,lwK){const u=12,py=282;const g=S(P(u,py)),t=S(P(u,py,340));
+  ctx.strokeStyle=C.muted;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(g[0],g[1]);ctx.lineTo(t[0],t[1]);ctx.stroke();
+  ctx.font=`11px "BIZ UDPGothic",sans-serif`;ctx.textAlign="left";ctx.fillStyle=C.muted;
+  [100,200,300].forEach(m=>{const q=S(P(u,py,m));ctx.beginPath();ctx.moveTo(q[0]-4,q[1]);ctx.lineTo(q[0]+4,q[1]);ctx.stroke();ctx.fillText(m+"m",q[0]+7,q[1]+4)});
+  if(i>=2&&i<=5){const q=S(P(u,py,31));ctx.strokeStyle=C.accent;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(q[0]-6,q[1]);ctx.lineTo(q[0]+6,q[1]);ctx.stroke();
+    ctx.fillStyle=C.accent;ctx.fillText(i===5?"31m制限→1963撤廃":"31m制限",q[0]+9,q[1]+4)}}
+function label(txt,x,y,col,size,bold){ctx.font=`${bold?"700 ":""}${size}px "BIZ UDPGothic",sans-serif`;ctx.textAlign="center";
+  ctx.lineWidth=3.5;ctx.strokeStyle=C.sheet;ctx.lineJoin="round";ctx.strokeText(txt,x,y);ctx.fillStyle=col;ctx.fillText(txt,x,y);return ctx.measureText(txt).width}
+function drawFocus(st){if(!st.fLM.size)return;
+  st.fLM.forEach(j=>{const l=LM[j];const gone=l.end===st.i;const q=S(P(l.x,l.py,gone?0:(l.h||0)));
+    const col=gone?C.muted:C.accent;
+    for(let r=0;r<2;r++){const ph=(PULSE+r*.5)%1;ctx.globalAlpha=st.amp*(1-ph)*.9;ctx.beginPath();ctx.arc(q[0],q[1],9+ph*22,0,7);
+      ctx.strokeStyle=col;ctx.lineWidth=2.2;if(gone)ctx.setLineDash([4,3]);ctx.stroke();ctx.setLineDash([])}
+    ctx.globalAlpha=st.amp*(.25+.25*Math.sin(PULSE*Math.PI*2));ctx.beginPath();ctx.arc(q[0],q[1],10,0,7);ctx.fillStyle=col;ctx.fill();ctx.globalAlpha=1});}
+function hit(pl,x,y,w,h){return pl.some(p=>Math.abs(p.x-x)<(p.w+w)/2+3&&Math.abs(p.y-y)<(p.h+h)/2+2)}
+function drawLabels(st){
+  const {i,cp,stop,type}=st;
+  // axis
+  AXIS.forEach(([n,x])=>{const q=S(P(x,P0));if(q[0]>-20&&q[0]<W+20)label(n,q[0],q[1]-7,C.muted,11)});
+  const zoomed=type!=="change"&&type!=="rest";
+  const placed=[];
+  const list=LM.filter(l=>l.s<=i&&!(l.end!=null&&i>=l.end)&&(l.s===i||(zoomed&&l.m)||(!zoomed&&l.m&&l.h)));
+  list.sort((a,b)=>(b.s===i)-(a.s===i));
+  list.forEach(l=>{const nw=l.s===i;if(nw&&type==="change"&&cp<.9)return;
+    const g=S(P(l.x,l.py)),t=S(P(l.x,l.py,l.h||0));
+    if(!l.h){ctx.beginPath();ctx.arc(g[0],g[1],3,0,7);ctx.fillStyle=C.ink;ctx.fill();ctx.strokeStyle=C.sheet;ctx.lineWidth=1;ctx.stroke();
+      if(nw){ctx.beginPath();ctx.arc(g[0],g[1],8,0,7);ctx.strokeStyle=C.accent;ctx.lineWidth=1.6;ctx.stroke()}}
+    const txt=(l.sn||l.n)+(l.h?` ${l.h}m`:"");const size=nw?(zoomed?14:12):11;
+    ctx.font=`${nw?"700 ":""}${size}px "BIZ UDPGothic",sans-serif`;const w=ctx.measureText(txt).width;
+    let x=t[0],y=t[1]-(l.h?8:11);
+    while(hit(placed,x,y-size*.35,w,size))y-=size+4;
+    placed.push({x,y:y-size*.35,w,h:size});
+    if(y<t[1]-14){placed.push({x,y:(y+t[1])/2,w:4,h:t[1]-y});ctx.strokeStyle=C.muted;ctx.lineWidth=.7;ctx.beginPath();ctx.moveTo(x,y+3);ctx.lineTo(x,t[1]-2);ctx.stroke()}
+    label(txt,x,y,nw?C.accent:C.muted,size,nw)});
+  // ghosts: things that disappear in this era
+  LM.filter(l=>l.end===i&&l.gy).forEach(l=>{if(type==="change"&&cp<.5)return;
+    const g=S(P(l.x,l.py));ctx.setLineDash([3,3]);ctx.beginPath();ctx.arc(g[0],g[1],8,0,7);ctx.strokeStyle=C.muted;ctx.lineWidth=1.4;ctx.stroke();ctx.setLineDash([]);
+    ctx.beginPath();ctx.moveTo(g[0]-4,g[1]-4);ctx.lineTo(g[0]+4,g[1]+4);ctx.moveTo(g[0]+4,g[1]-4);ctx.lineTo(g[0]-4,g[1]+4);ctx.stroke();
+    const txt=`${l.sn||l.n}（${l.gy} 消滅）`,size=zoomed?13:11;ctx.font=`${size}px "BIZ UDPGothic",sans-serif`;const w=ctx.measureText(txt).width;
+    let x=g[0],y=g[1]+22,tries=0;while(hit(placed,x,y-size*.35,w,size)&&tries<12){y+=size+4;tries++}placed.push({x,y:y-size*.35,w,h:size});
+    if(y>g[1]+24){ctx.strokeStyle=C.muted;ctx.lineWidth=.7;ctx.beginPath();ctx.moveTo(g[0],g[1]+9);ctx.lineTo(x,y-size);ctx.stroke()}
+    label(txt,x,y,C.muted,size,false);ctx.strokeStyle=C.muted;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x-w/2,y-size*.35);ctx.lineTo(x+w/2,y-size*.35);ctx.stroke()});
+}
+function shade(hex,f){const m=hex.match(/^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);if(!m)return hex;
+  return "#"+[1,2,3].map(k=>Math.round(parseInt(m[k],16)*f).toString(16).padStart(2,"0")).join("")}
+
+/* ================= UI ================= */
+let t=0,playing=false,holding=false,dirty=true,lastEra=-1,last=performance.now();
+const scrub=$("scrub"),fill=$("fill"),knob=$("knob"),playB=$("play"),capEl=$("cap"),badge=$("badge");
+function buildScrub(){const segs=$("segs");segs.innerHTML="";
+  STEPS.forEach((s,k)=>{const d=document.createElement("button");d.className="seg";d.style.flex=String(ERA0[k+1]-ERA0[k]);
+    d.innerHTML=`<span class="yl">${s.y}</span><span class="ys">’${s.y.slice(2)}</span>`;d.setAttribute("aria-label",`${s.y} ${s.t}へ`);
+    d.addEventListener("click",e=>{e.stopPropagation();seek(ERA0[k]+D.change);pause()});segs.appendChild(d)})}
+function setPlaying(v){playing=v;playB.textContent=v?"❚❚ 一時停止":"▶ 再生";playB.setAttribute("aria-pressed",v);last=performance.now()}
+function pause(){setPlaying(false)}
+playB.onclick=()=>{if(!playing&&t>=TOTAL-.01)t=0;setPlaying(!playing)};
+function seek(x){t=clamp(x,0,TOTAL);dirty=true}
+let scrubbing=false;
+function scrubTo(e){const r=$("track").getBoundingClientRect();seek((e.clientX-r.left)/r.width*TOTAL)}
+$("track").addEventListener("pointerdown",e=>{scrubbing=true;$("track").setPointerCapture(e.pointerId);pause();scrubTo(e)});
+$("track").addEventListener("pointermove",e=>{if(scrubbing)scrubTo(e)});
+$("track").addEventListener("pointerup",()=>scrubbing=false);
+cv.addEventListener("pointerdown",()=>{if(playing){holding=true;badge.hidden=false}});
+["pointerup","pointercancel","pointerleave"].forEach(ev=>cv.addEventListener(ev,()=>{if(holding){holding=false;badge.hidden=true;last=performance.now()}}));
+document.addEventListener("keydown",e=>{if(e.code==="Space"&&e.target===document.body){e.preventDefault();playB.click()}});
+window.addEventListener("resize",resize);if(window.ResizeObserver)new ResizeObserver(resize).observe(cv);
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{readColors();dirty=true});
+
+function updatePanel(i){
+  const S_=STEPS[i];$("years").textContent=S_.y;$("title").textContent=S_.t;$("kicker").textContent=S_.k;$("story").textContent=S_.s;
+  ["era","story","lm"].forEach(id=>{const e=$(id);e.classList.remove("fade");void e.offsetWidth;e.classList.add("fade")});
+  const L=LM.filter(l=>l.s===i);
+  $("lm").innerHTML=L.map(l=>`<li><b>${l.y}</b><span>${l.n}${l.note?`（${l.note}）`:""}</span><em>${l.h?l.h+"m":""}</em></li>`).join("");
+  const G=LM.filter(l=>l.end===i&&l.gy);$("gonebox").hidden=!G.length;
+  $("gone").innerHTML=G.map(l=>`<li><b>${l.gy}</b><span><s>${l.n}</s> — ${l.why}</span><em></em></li>`).join("");
+  $("chips").innerHTML=MODES.filter(m=>m.s<=i).map(m=>{const g=m.end!=null&&i>=m.end;return `<span class="chip${m.s===i?" new":""}${g?" gone":""}">${m.n}</span>`}).join("");
+  const T=LM.filter(l=>l.h&&l.s<=i).sort((a,b)=>b.h-a.h),base=Math.max(...TOWN[i]);
+  $("stat").innerHTML=T.length?`いちばん高いのは <strong>${T[0].sn||T[0].n}（${T[0].h}m）</strong>。100m超の建物は <strong>${T.filter(x=>x.h>=100).length}</strong>棟。沿道のふつうの建物はおよそ <strong>${base}m</strong> まで。`
+    :`高い建物はまだありません。沿道のふつうの建物はおよそ <strong>${base}m</strong>${base<=8?"（2階建ての町家）":""}。`;
+  [...$("segs").children].forEach((b,k)=>{b.classList.toggle("on",k===i);b.classList.toggle("done",k<i)})}
+let lastCap=null;
+function frame(now){
+  const dt=Math.min(.1,(now-last)/1000);last=now;
+  if(playing&&!holding&&!scrubbing){t+=dt;dirty=true;if(t>=TOTAL){t=TOTAL;pause()}}
+  if(dirty){const st=state(t);draw(st);
+    if(st.i!==lastEra){lastEra=st.i;updatePanel(st.i)}
+    if(st.cap!==lastCap){lastCap=st.cap;if(st.cap){capEl.textContent=st.cap;capEl.classList.add("show")}else capEl.classList.remove("show")}
+    const f=t/TOTAL*100;fill.style.width=f+"%";knob.style.left=f+"%";dirty=playing&&!holding}
+  requestAnimationFrame(frame)}
+readColors();resize();buildScrub();
+seek(D.change);setPlaying(false);
+requestAnimationFrame(frame);
+if(document.fonts)document.fonts.ready.then(()=>dirty=true);
+
+</script>
+</body>
+</html>
